@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalyst Kinetics Intake</title>
+    <script src="js/jquery-3.1.1.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
+
+    <script src="plugins/datepicker/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="plugins/datepicker/bootstrap-datetimepicker.min.css" type="text/css">
+    <link rel="stylesheet" href="css/sheets-of-paper-a3.css" type="text/css">
+
+    <script type="text/javascript">
+        $(function () {
+            $('.form_date').datetimepicker({
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0
+            });
+            $("#birthdayDatePicker").on("change", function (e) {
+                var myyear = new Date($('#birthdayDatePickerValue').val()).getFullYear();
+                var nowyear = new Date().getFullYear();
+                var age = nowyear-myyear;
+                $('#myAge').val(age);
+            });
+            $('#checkpage2').click(function() {
+                if($('#checkpage2value').val() == 'no') {
+                    $('#checkpage2').css({'background': "url('templates/imgs/check.png')", 'background-repeat': 'no-repeat', 'background-position': 'center'});
+                    $('#checkpage2value').val('yes');
+                    return;
+                }
+                if($('#checkpage2value').val() == 'yes') {
+                    $('#checkpage2').css({'background': "", 'background-repeat': '', 'background-position': ''});
+                    $('#checkpage2value').val('no');
+                    return;
+                }
+            });
+            $('#credit_card_check_visa').click(function () {
+               $(this).css({'background': "url('templates/imgs/check.png')", 'background-repeat': 'no-repeat', 'background-position': 'center'});
+               $('#credit_card_check_master').css({'background': "", 'background-repeat': '', 'background-position': ''});
+               $('#credit_card_check_value').val('visa');
+            });
+            $('#credit_card_check_master').click(function () {
+                $(this).css({'background': "url('templates/imgs/check.png')", 'background-repeat': 'no-repeat', 'background-position': 'center'});
+                $('#credit_card_check_visa').css({'background': "", 'background-repeat': '', 'background-position': ''});
+                $('#credit_card_check_value').val('master');
+            });
+            var nowyear = new Date().getFullYear();
+
+            for(var i=0; i<6; i++) {
+                $('#experation_years').append('<option value="'+(nowyear+i)+'">'+(nowyear+i)+'</option>')
+            }
+
+            $('#mySubmit').click(function () {
+                if($('#checkpage2value').val() == 'no') {
+                    $('#myModalWarning').modal('show');
+
+                }
+                else {
+
+                    $('#formResultType').val('email');
+                    var postdata = $('#myForm').serialize();
+                    $.post('printlib/Catalyst Kinetics Intake.php',
+                        postdata,
+                        function(data, status){
+                        //    alert("Data: " + data + "\nStatus: " + status);
+                            $('#myModalOK').modal('show');
+                        });
+                }
+                return false;
+            })
+
+            $('#btnModalViewPDF').click(function () {
+                $('#formResultType').val('viewpdf');
+                $('#myForm').submit();
+            })
+        });
+    </script>
+</head>
+<body class="document">
+
+<div class="jumbotron">
+
+</div>
+        <form data-toggle="validator" role="form" class="form-horizontal" action="printlib/Catalyst Kinetics Intake.php" id="myForm" method="post">
+            <div class="page">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <img src="imgs/logo.png" width="80%">
+                    </div>
+                    <div class="col-sm-5">
+                        <h2 class="text-center">Client Intake Form</h2>
+                        <p class="text-center text-justify">Please complete this intake form to the best of
+                            your ability. If possible please return by email
+                            prior to your appointment as it will assist the
+                            practitioner to maximize your time during your
+                            first visit. Should you have any questions
+                            please do not hesitate to contact us.</p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <div class="row" style="font-size: 1.5em;">
+                        <div class="col-sm-7">
+                            <strong>PERSONAL INFORMATION</strong>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="col-sm-5">
+                                <label>DATE: </label>
+                            </div>
+                            <div class="input-group date form_date col-sm-7" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                <input class="form-control" size="16" type="text" name="makingdate">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: url('imgs/title_back.jpg') repeat-x; height: 8px; width: 100%"></div>
+                </div>
+                <div class="form-group">
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label for="inputName" class="control-label">Full Name</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="inputName" name="fullname">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label for="inputName2" class="col-sm-3 control-label">I go by:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="inputName2" name="igoby">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="control-label">Birthday (mm/dd/yy)</label>
+                                </div>
+                                <div class="input-group date form_date col-sm-6" data-date="" data-date-format="mm/dd/yy" data-link-format="yyyy-mm-dd" id="birthdayDatePicker">
+                                    <input class="form-control" size="16" type="text" name="birthday" id="birthdayDatePickerValue">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label">Age</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="age" id="myAge">
+                                        </div>
+                                        <div class="checkbox col-sm-3">
+                                            <label>
+                                                <input type="radio" name="sex" value="male">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="checkbox col-sm-3">
+                                            <label>
+                                                <input type="radio" name="sex" value="female">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">Home Address: </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="homeaddress">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label class="control-label">City</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input class="form-control" name="city">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <label class="col-sm-5 control-label">Province/State: </label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="provincestate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <label class="col-sm-6 control-label">Postal /Zip Code: </label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" name="zipcode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Primary Phone: </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="primaryphone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label class="col-sm-4 control-label">Cellphone: </label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="cellphone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <label class="control-label">Email: </label>
+                        </div>
+                        <div class="col-sm-11">
+                            <input class="form-control" name="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="control-label">Who referred you to Catalyst Kinetics? / How did you find out about Catalyst Kinetics? : </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5 checkbox">
+                            <label>
+                                <input type="checkbox" name="pleasespecify1" value="catalyst">
+                                <b>Catalyst Kinetics Staff: (please specify)</b>
+                            </label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="catalystkinetics">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5 checkbox">
+                            <label>
+                                <input type="checkbox" name="pleasespecify2" value="practitioner">
+                                <b>Another Practitioner/Doctor: (please specify)</b>
+                            </label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="practitionerdoctor">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5 checkbox">
+                            <label>
+                                <input type="checkbox" name="pleasespecify3" value="patient">
+                                <b>Another Patient/Client: (please specify)</b>
+                            </label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="patientclient">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 checkbox">
+                            <label>
+                                <input type="checkbox" name="pleasespecify4" value="searchengine">
+                                <b>Internet / Search Engine / Social Media: (please specify)</b>
+                            </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="searchenginesocialmedia">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3 checkbox">
+                            <label>
+                                <input type="checkbox" name="pleasespecify5" value="other">
+                                <b>Other: (please specify)</b>
+                            </label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input class="form-control" name="otherspecify">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label class="control-label">Occupation: </label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="form-control" name="occupation">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label class="col-sm-4 control-label">Work Phone: </label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="workphone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Family Doctor: </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="familydoctor">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label class="col-sm-4 control-label">Phone Number: </label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="phonenumber">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label class="control-label">MSP#: </label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="form-control" name="mspinput">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label class="col-sm-6 control-label">Extended Medical Coverage? </label>
+                                <div class="col-sm-6 row">
+                                    <div class="checkbox col-sm-7">
+                                        <label>
+                                            <input type="radio" name="medicalcoverage" value="yes">
+                                            Yes
+                                        </label>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="checkbox col-sm-5">
+                                        <label>
+                                            <input type="radio" name="medicalcoverage" value="no">
+                                            No
+                                        </label>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <label class="control-label">Do you have an active ICBC / WCB Claim? </label>
+                                </div>
+                                <div class="col-sm-5 row">
+                                    <div class="checkbox col-sm-6">
+                                        <label>
+                                            <input type="radio" name="icbcwcbclaim" value="yes">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="checkbox col-sm-6">
+                                        <label>
+                                            <input type="radio" name="icbcwcbclaim" value="no">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <label class="col-sm-4 control-label">Claim # </label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="claiminput">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <label class="control-label">Have you had a previous MVA or workplace accident? </label>
+                                </div>
+                                <div class="col-sm-4 row">
+                                    <div class="checkbox col-sm-6">
+                                        <label>
+                                            <input type="radio" name="mvaworkplace" value="yes">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="checkbox col-sm-6">
+                                        <label>
+                                            <input type="radio" name="mvaworkplace" value="no">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Under 19 years of age:</label>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="control-label">Are you currently a student? </label>
+                                </div>
+                                <div class="col-sm-6 row">
+                                    <div class="checkbox col-sm-6">
+                                        <label>
+                                            <input type="radio" name="currentlystudent" value="yes">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="checkbox col-sm-6">
+                                        <label>
+                                            <input type="radio" name="currentlystudent" value="no">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label class="col-sm-3 control-label">School/Grade: </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" name="schoolgrade">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label class="control-label">Parents Name: </label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="parentsname">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <label class="col-sm-5 control-label">Contact Number: </label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="contactnumber">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="control-label">Emergency Contact/Relation: </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control" name="emergencycontact">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <label class="col-sm-4 control-label">Telephone: </label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="telephonenumber">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row"></div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src="imgs/small_logo.png" width="100%" height="100%">
+                        </div>
+                        <div class="col-sm-9" style="padding-top: 4px;">
+                            <h5>7865 Edmonds Street, Burnaby, BC, V3N 1B9 ! <a>info@catalystkinetics.com</a> ! 604-CKGROUP (254-7687)</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page" style="padding-left: 5cm; padding-right: 5cm; padding-top: 3cm">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <img src="imgs/logo.png" width="100%">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row"></div>
+                </div>
+                <div class="form-group">
+                    <div class="row"></div>
+                </div>
+                <div style="height: 30px;">
+                    <strong>Catalyst Kinetics Group Appointment Booking and Cancelation Policies:</strong>
+                </div>
+                <br><br>
+                <div style="width:300px; height: 2px; background-color: black;"></div>
+                <br>
+                <p><u><i>Booking Appointments:</i></u></p>
+                <p class="text-justify">
+                    Appointment bookings can be made online at our website (<span style="color: blue;">www.catalystkinetics.com</span>), through the
+                    Mindbody Connect App (Android and iOS), via email, or by phone (604-254-7687). <strong>If you have
+                    provided your email address you will receive an email confirmation of the
+                    appointment.</strong> You will NOT receive any other form of communication to confirm
+                    you appointment. Every effort is made to see you when you are scheduled, but urgent matters
+                    sometimes arise that may take more time than expected. While this may cause a delay in you being
+                    seen at the scheduled time, you will receive the same courtesy in the event you require such care. If
+                    you arrive late your appointment will be shortened and/or you may be asked to reschedule.
+                </p>
+                <p class="text-justify">
+                    <strong>
+                        *Please note – Appointments are in high demand and require a Credit Card to book. You will not be
+                        charged anything at the time of booking, but a cancellation fees may apply in case of a Missed
+                        Appointment. Please see <i>“Missed Appointments (No-Show / Late Cancellations)”</i> for more details
+                    </strong>
+                </p>
+
+                <p>
+                    <u><i>Cancelling Appointments:</i></u>
+                </p>
+
+                <p class="text-justify">
+                    In order to be respectful of the medical needs of other patients, please inform the office promptly if
+                    you are unable to attend a scheduled appointment. This time will be reallocated to someone who is
+                    in urgent need of treatment. Appointments are in high demand and as such, the earlier you inform
+                    us of the cancellation the higher the likelihood we can provide another patient the opportunity to
+                    have access to timely medical care. If it is necessary to cancel your scheduled appointment, we
+                    request at least <strong>24 hours’ notice (working day*).</strong> Cancellation requests submitted with less
+                    than 24 hours’ notice will be processed as a late cancellation.
+                </p>
+
+                <p class="text-justify">
+                    <strong>
+                        *Please note – Due to office closures, cancellations for Saturday and Monday should be
+                        communicated before 12 PM on Friday to give us the opportunity to fill the appointment and avoid
+                        cancellation fees.
+                    </strong>
+                </p>
+
+                <p>
+                    <u><i>Missed Appointments (No-Show / Late Cancellations):</i></u>
+                </p>
+
+                <p class="text-justify">
+                    A “no-show” or “late cancellation” is someone who misses an appointment without cancelling it
+                    with sufficient notice (as outlined above). A failure to be present at the time of a scheduled
+                    appointment will be recorded in your patient file as a ‘no-show’ or ‘late cancellation’. Every effort
+                    will be made to fill any spots where a cancellation is made within the 24-hour period.
+                </p>
+
+                <p>
+                    <strong>*If the appointment is not filled, a cancellation fee (up to the full value of the visit) may be applied.</strong>
+                </p>
+                <br><br>
+                <div style="height: 90px;">
+                    <div style="width: 50px; height: 90px; text-align: center; float: left">
+                        <p style="width: 50px; height: 50px;border: solid 1px" id="checkpage2">
+
+                        </p>
+                        <div style="font-size: 0.7em; margin: 0; padding: 0;">
+                            Please<br>Check
+                        </div>
+                    </div>
+
+                    <div style="margin-left: 60px; height: 90px;background-color: yellow;border: solid 1px; font-size: 1.3em; padding-left: 10px;padding-top: 12px">
+                        I accept the terms presented in this document and agree to pay
+                        any late cancellation or missed appointment fees Please that I may incur.
+                    </div>
+                    <input type="hidden" id="checkpage2value" name="checkpage2value" value="no">
+                </div>
+            </div>
+            <div class="page">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img src="imgs/logo2.png" width="100%" height="100%">
+                    </div>
+                    <div class="col-sm-6">
+                        <h2 class="text-right">CREDIT CARD<br>AUTHORIZATION FORM</h2>
+                    </div>
+                </div>
+                <br><br>
+                <h3>Customer Information</h3>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Customer Name: </label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="customersname">
+                    </div>
+                </div>
+                <p class="text-center"><strong>Please call 604-254-7687 if you would prefer to provide your credit card information over the phone.</strong></p>
+
+                <br><br>
+                <h3>Credit Card Information</h3>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Please Check One: </label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-2 col-sm-offset-2">
+                                <label class="control-label">VISA</label>
+                                <div id="credit_card_check_visa" style=" width: 40px; height: 40px; background-color: gainsboro; left: 45px; top: -30px; border: 1px solid black;position: relative"></div>
+                            </div>
+                            <div class="col-sm-2 col-sm-offset-1">
+                                <label class="control-label">MASTERCARD</label>
+                                <div id="credit_card_check_master" style="width: 40px; height: 40px; background-color: gainsboro; left: 125px; top: -30px; border: 1px solid black;position: relative"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="credit_card_check_value" name="credit_card_check" value="">
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Credit Card Number: </label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul>
+                                    <li><input name="credit_number1" maxlength="1"></li>
+                                    <li><input name="credit_number2" maxlength="1"></li>
+                                    <li><input name="credit_number3" maxlength="1"></li>
+                                    <li><input name="credit_number4" maxlength="1"></li>
+                                    <li><input name="credit_number5" maxlength="1"></li>
+                                    <li><input name="credit_number6" maxlength="1"></li>
+                                    <li><input name="credit_number7" maxlength="1"></li>
+                                    <li><input name="credit_number8" maxlength="1"></li>
+                                    <li><input name="credit_number9" maxlength="1"></li>
+                                    <li><input name="credit_number10" maxlength="1"></li>
+                                    <li><input name="credit_number11" maxlength="1"></li>
+                                    <li><input name="credit_number12" maxlength="1"></li>
+                                    <li><input name="credit_number13" maxlength="1"></li>
+                                    <li><input name="credit_number14" maxlength="1"></li>
+                                    <li><input name="credit_number15" maxlength="1"></li>
+                                    <li><input name="credit_number16" maxlength="1"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Experation Date: </label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <select name="experation_months" class="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select name="experation_years" id="experation_years" class="form-control">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <label class="control-label col-sm-4">3 Digit CVV #:</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" name="threedigitcvv">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <h3>Billing Information: </h3>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name on Card: </label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="nameoncard">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Billing Address: </label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="billingaddress">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Billing City: </label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="billingcity">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Province/State: </label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <input class="form-control" name="billingprovincestate">
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="row">
+                                    <label class="control-label col-sm-4">Zip/Postal Code: </label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" name="billingzippostalcode">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Phone: </label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="billingphone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email Address: </label>
+                    <div class="col-sm-10">
+                        <input class="form-control" name="billingemailaddress">
+                    </div>
+                </div>
+                <br><br>
+                <p class="text-justify">The undersigned authorizes and requests Catalyst Kinetics Group (the Company) to charge the above credit card
+                    (the Card) for the amounts owed on all invoices to which the above]referenced Customer is a party. Customers
+                    wishing to cancel preauthorized credit card payments should contact Catalyst Kinetics Group in advance of their
+                    next payment. </p>
+                <br><br>
+
+                <h3>Signature: </h3>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label"></label>
+                            <div class="col-sm-6 text-center">
+                                <label>Card Holder</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Print Name: </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name="printname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Signature <small>(paper copy only):</small> </label>
+                            <div class="col-sm-6">
+                                <input class="form-control"  readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Date: </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name="printdate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="col-sm-2">
+
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <div class="col-sm-12 text-center">
+                                    <label>Customer <small style="font-weight: normal; font-size: 0.8em">(only if different from Card Holder)</small></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input class="form-control" name="printname2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input class="form-control"  readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input class="form-control" name="printdate2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+
+                <br><br>
+                <div class="row" id="footer">
+                    <div class="col-sm-5">
+                        <h3>Address</h3>
+                        <p>7865 Edmonds Street, Burnaby, BC, V3N 1B9 </p>
+                    </div>
+                    <div class="col-sm-2">
+                        <h3>Phone</h3>
+                        <p>604.254.7687</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <h3>Fax</h3>
+                        <p>1.604.522.4999</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <h3>Web</h3>
+                        <p><a href="http://www.catalystkinetics.com">www.catalystkinetics.com</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="page">
+                <div class="pagecontent">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img src="imgs/logo4.png" width="100%" height="100%">
+                        </div>
+                        <div class="col-sm-6">
+                            <h2 class="text-center">Appointment Availability<br>Form</h2>
+                        </div>
+                    </div>
+                    <br><br><br><br>
+                    <h3>My preferred times for appointments are as follows:</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Times</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="firstcol">8:00 - 12:00</td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck1" value="mycheckvalue1">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck2" value="mycheckvalue2">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck3" value="mycheckvalue3">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck4" value="mycheckvalue4">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck5" value="mycheckvalue5">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck6" value="mycheckvalue6">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="firstcol">12:00 - 17:00</td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck7" value="mycheckvalue7">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck8" value="mycheckvalue8">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck9" value="mycheckvalue9">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck10" value="mycheckvalue10">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck11" value="mycheckvalue11">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck12" value="mycheckvalue12">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="firstcol">17:00 - 20:00</td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck13" value="mycheckvalue13">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck14" value="mycheckvalue14">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck15" value="mycheckvalue15">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck16" value="mycheckvalue16">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck17" value="mycheckvalue17">
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mycheck18" value="mycheckvalue18">
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary btn-block" style="clear: both"data-toggle="modal" id="mySubmit">Submit</button>
+                    <div class="row" id="footer2">
+                        <div class="col-sm-5">
+                            <h3>Address</h3>
+                            <p>7865 Edmonds Street, Burnaby, BC, V3N 1B9 </p>
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Phone</h3>
+                            <p>604.254.7687</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Fax</h3>
+                            <p>602.522.4999</p>
+                        </div>
+                        <div class="col-sm-3">
+                            <h3>Web</h3>
+                            <p><a href="http://www.catalystkinetics.com">www.catalystkinetics.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" id="formResultType" value="email" name="formResultType">
+        </form>
+        <div class="modal fade bs-warning-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myModalWarning">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header bg-warning">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Warning</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You must check "I accept the terms presented in this document and agree to pay
+                            any late cancellation or missed appointment fees that I may incur." on page 2.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade bs-ok-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myModalOK">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Congratulation!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Your form is completed. Email is sended.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnModalViewPDF">View PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    ul li {
+        display: inline;
+        float: left;
+        margin: 4px;
+        width: 35px;
+        height: 35px;
+    }
+    li input {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background-color: gainsboro;
+        border: 1px solid black;
+    }
+    .pagecontent {
+        width: 100%;
+        min-height: 42cm;
+        position: relative;
+    }
+    #footer {
+        background-color: #ff6600;
+        padding-bottom: 10px;
+
+    }
+
+    #footer h3 {
+        color: white;
+    }
+    #footer p {
+        color: black;
+    }
+
+    #footer2 {
+        bottom: 0px;
+        position: absolute;
+        background-color: #ff6600;
+        padding-bottom: 10px;
+        margin-left: 5px;
+        width: 100%;
+    }
+    #mySubmit {
+        position: absolute;
+        bottom: 100px;
+        margin-left: 5px;
+    }
+    table thead th {
+        background-color: black;
+        color: white;
+        text-align: center;
+    }
+    table thead th:first-child {
+        text-align: left;
+    }
+    table tbody td {
+        text-align: center;
+    }
+    table tbody td.firstcol {
+        text-align: left;
+    }
+
+</style>
+</html>
